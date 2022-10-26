@@ -74,15 +74,15 @@ node *insert(node *p, int k) {              // вставка ключа k в д
     return balance(p);
 }
 
-void inorder(node **p) {                    // Симметричный обход
-    if ((*p) != NULL) {
-        inorder(&(*p)->left);
-        cout << (*p)->key << " ";
-        inorder(&(*p)->right);
+void inorder(node *p) {                    // Симметричный обход
+    if (p != NULL) {
+        inorder(p->left);
+        cout << p->key << " ";
+        inorder(p->right);
     }
 }
 
-//void postorder(node **p) {              // Обратный обход
+//void postorder(node **p) {                // Обратный обход
 //    if((*p) != NULL) {
 //        postorder(&(*p)->left);
 //        postorder(&(*p)->right);
@@ -125,7 +125,7 @@ int main() {
         cin >> s;
         p = insert(p, s);
     }
-    inorder(&p);
-    cout << search_value(p, 8);
+    inorder(p);
+    cout << endl << search_value(p, 8);
     return 0;
 }
