@@ -82,22 +82,6 @@ void inorder(node *p) {                    // Симметричный обхо�
     }
 }
 
-//void postorder(node **p) {                // Обратный обход
-//    if((*p) != NULL) {
-//        postorder(&(*p)->left);
-//        postorder(&(*p)->right);
-//        cout << (*p)->key << " ";
-//    }
-//}
-//
-//void beforeorder(node **p) {              // Прямой обход
-//    if((*p) != NULL) {
-//        cout << (*p)->key << " ";
-//        beforeorder(&(*p)->left);
-//        beforeorder(&(*p)->right);
-//    }
-//}
-
 int height_tree(node *p) {              // Поиск высоты дерева
     if (p == NULL) return 0;
     else if (p->left == NULL && p->right == NULL) return 0;
