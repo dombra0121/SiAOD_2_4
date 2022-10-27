@@ -95,7 +95,14 @@ int height_tree(node *p) {              // Поиск высоты дерева
 int search_value(node *p, int k, int counter = 0) {      // Поиск длины пути от корня до заданного значения
     if (p->key == k) return counter;
     else if (k < p->key) search_value(p->left, k, counter + 1);
-    else search_value(p->right, k, counter + 1);
+    else if (k > p->key) search_value(p->right, k, counter + 1);
+    else return -1;
+}
+
+void menu() {
+    cout << "\nВведите операцию выполнения программы:" << endl;
+    cout << "1 - Вывод дерева (симметричный обход);\n2 - Вставка элемента;\n3 - Поиск длины от корня до заданного "
+            "значения\n4 - Поиск высоты дерева\n5 - Завершение работы программы\nВвод: ";
 }
 
 int main() {
@@ -104,12 +111,44 @@ int main() {
     node *p = NULL;
     int n;
     int s;
-    int sum = 0;
-    for (int i = 0; i < 6; i++) {
+    cout << "Введите размер AVL-дерева: ";
+    cin >> n;
+    cout << "Введите целочисленные ключи для элементов AVL-дерева:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << i + 1 << "-й элемент: ";
         cin >> s;
         p = insert(p, s);
     }
-    inorder(p);
-    cout << endl << search_value(p, 8);
+    menu();
+    int operation;
+    cin >> operation;
+    while (true) {
+        if (operation == 1) inorder(p);
+        else if (operation == 2) {
+            int c;
+            cout << "Введите целочисленный ключ вставляемого элемента: ";
+            cin >> c;
+            insert(p,c);
+        }
+        else if (operation == 3) {
+            int c;
+            cout << "Введите ключ элемента, до которого необходимо найти длину пути от корня: ";
+            cin >> c;
+            if (search_value(p, c) == -1) cout << "Данное значение отсутствует в дереве";
+            else cout << endl << "Длина искомого пути: " << search_value(p, 8);
+        }
+        else if (operation == 4) {
+            cout << "Высота дерева равна " << height_tree(p);
+        }
+        else if (operation == 5) {
+            cout << "Программа завершила свою работу!";
+            break;
+        }
+        menu();
+        cin >> operation;
+    }
+//    inorder(p);
+//    if (search_value(p, 8) == -1) cout << "Данное значение отсутствует в дереве";
+//    else cout << endl << search_value(p, 8);
     return 0;
 }
