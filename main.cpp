@@ -92,10 +92,10 @@ int height_tree(node *p) {              // Поиск высоты дерева
     }
 }
 
-int search_value(node *p, int k) {      // Поиск длины пути от корня до заданного значения
-    if (p->key == k) return 0;
-    else if (k < p->key) return search_value(p->left, k) + 1;
-    else return search_value(p->right, k) + 1;
+int search_value(node *p, int k, int counter = 0) {      // Поиск длины пути от корня до заданного значения
+    if (p->key == k) return counter;
+    else if (k < p->key) search_value(p->left, k, counter + 1);
+    else search_value(p->right, k, counter + 1);
 }
 
 int main() {
