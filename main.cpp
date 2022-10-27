@@ -100,7 +100,7 @@ int search_value(node *p, int k, int counter = 0) {      // Поиск длин�
     else return -1;
 }
 
-void print_tree(node *p, int level) {                   // Обычный вывод дерева
+void print_tree(node *p, int level = 0) {                   // Обычный вывод дерева
     cout << endl << setfill('-') << setw(4 * level) << p->key;
     if (p->left) print_tree(p->left, level + 1);
     if (p->right) print_tree(p->right, level + 1);
@@ -130,7 +130,7 @@ int main() {
     int operation;
     cin >> operation;
     while (true) {
-        if (operation == 0) print_tree(p, 0);
+        if (operation == 0) print_tree(p);
         else if (operation == 1) inorder(p);
         else if (operation == 2) {
             int c;
