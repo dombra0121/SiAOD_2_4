@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -75,7 +76,7 @@ node *insert(node *p, int k) {              // вставка ключа k в д
 }
 
 void inorder(node *p) {                    // Симметричный обход
-    if (p != NULL) {
+    if (p != nullptr) {
         inorder(p->left);
         cout << p->key << " ";
         inorder(p->right);
@@ -83,8 +84,8 @@ void inorder(node *p) {                    // Симметричный обхо�
 }
 
 int height_tree(node *p) {              // Поиск высоты дерева
-    if (p == NULL) return 0;
-    else if (p->left == NULL && p->right == NULL) return 0;
+    if (p == nullptr) return 0;
+    else if (p->left == nullptr && p->right == nullptr) return 0;
     else if (height_tree(p->left) > height_tree(p->right)) {
         return height_tree(p->left) + 1;
     } else {
@@ -94,21 +95,27 @@ int height_tree(node *p) {              // Поиск высоты дерева
 
 int search_value(node *p, int k, int counter = 0) {      // Поиск длины пути от корня до заданного значения
     if (p->key == k) return counter;
-    else if (k < p->key) search_value(p->left, k, counter + 1);
-    else if (k > p->key) search_value(p->right, k, counter + 1);
+    else if (k < p->key) return search_value(p->left, k, counter + 1);
+    else if (k > p->key) return search_value(p->right, k, counter + 1);
     else return -1;
+}
+
+void print_tree(node *p, int level) {                   // Обычный вывод дерева
+    cout << endl << setfill('-') << setw(4 * level) << p->key;
+    if (p->left) print_tree(p->left, level + 1);
+    if (p->right) print_tree(p->right, level + 1);
 }
 
 void menu() {
     cout << "\nВведите операцию выполнения программы:" << endl;
-    cout << "1 - Вывод дерева (симметричный обход);\n2 - Вставка элемента;\n3 - Поиск длины от корня до заданного "
-            "значения\n4 - Поиск высоты дерева\n5 - Завершение работы программы\nВвод: ";
+    cout << "0 - Вывод дерева;\n1 - Вывод дерева с помощью симметричного обхода;\n2 - Вставка элемента;\n3 - Поиск длины от корня до заданного "
+            "значения;\n4 - Поиск высоты дерева;\n5 - Завершение работы программы;\nВвод: ";
 }
 
 int main() {
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
-    node *p = NULL;
+    node *p = nullptr;
     int n;
     int s;
     cout << "Введите размер AVL-дерева: ";
@@ -123,7 +130,8 @@ int main() {
     int operation;
     cin >> operation;
     while (true) {
-        if (operation == 1) inorder(p);
+        if (operation == 0) print_tree(p, 0);
+        else if (operation == 1) inorder(p);
         else if (operation == 2) {
             int c;
             cout << "Введите целочисленный ключ вставляемого элемента: ";
@@ -135,7 +143,7 @@ int main() {
             cout << "Введите ключ элемента, до которого необходимо найти длину пути от корня: ";
             cin >> c;
             if (search_value(p, c) == -1) cout << "Данное значение отсутствует в дереве";
-            else cout << endl << "Длина искомого пути: " << search_value(p, 8);
+            else cout << endl << "Длина искомого пути: " << search_value(p, c);
         }
         else if (operation == 4) {
             cout << "Высота дерева равна " << height_tree(p);
@@ -147,8 +155,5 @@ int main() {
         menu();
         cin >> operation;
     }
-//    inorder(p);
-//    if (search_value(p, 8) == -1) cout << "Данное значение отсутствует в дереве";
-//    else cout << endl << search_value(p, 8);
     return 0;
 }
